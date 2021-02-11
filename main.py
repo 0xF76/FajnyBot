@@ -20,7 +20,7 @@ class Client(discord.Client):
         }
 
         # Get chosen IDs from saved file
-        self.chosenIDs = open('chosen.txt', 'r').read().split(" ")
+        self.chosenIDs = open('chosen.txt', 'r+').read().split(" ")
         self.chosenIDs.pop()
         for i in range(len(self.chosenIDs)):
             self.chosenIDs[i] = int(self.chosenIDs[i])
