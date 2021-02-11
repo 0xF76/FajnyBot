@@ -2,3 +2,4 @@
 .env
 chosen.txt
 *.jpg
+__pycache__
