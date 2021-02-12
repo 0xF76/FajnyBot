@@ -20,17 +20,27 @@ class Client(discord.Client):
         }
 
         # Get chosen IDs from saved file
-        self.chosenIDs = open('chosen.txt', 'r').read().split(" ")
+        self.chosenIDs = open('chosen.txt', 'r+').read().split(" ")
         self.chosenIDs.pop()
-        for i in range(len(self.chosenIDs)):
-            self.chosenIDs[i] = int(self.chosenIDs[i])
 
     async def on_message(self, message):
         if message.author == self.user:
             return
 
         elif message.content.startswith('$losuj') or message.content.startswith('$pseudolosuj'):
-            await message_handlers.selectStudent(self, message)
+            msg = message.content
+            if (msg.startswith('$losuj')):
+                msg = msg[len('$losuj'):]
+            else:
+                msg = msg[len('$pseudolosuj'):]
+
+            try:
+                amount = int(msg)
+            except ValueError: 
+                amount = 1
+            
+            for _ in range(amount):
+                await message_handlers.selectStudent(self, message)
         
         elif message.content.startswith('$fact'):
             await message_handlers.randomFact(message)
