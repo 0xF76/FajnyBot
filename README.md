@@ -40,7 +40,7 @@ In order to get bot token see [Discord Developers Documentation](https://discord
 
 ## 📋 Available commands
 * 🎲 pick random person from `data.json`\
-`$losuj`
+`$losuj <amount, default is 1>`
 * 📰 random fact\
 `$fact`
 * 🐱 random cat image\
