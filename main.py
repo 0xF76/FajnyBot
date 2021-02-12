@@ -45,8 +45,11 @@ class Client(discord.Client):
         elif message.content.startswith('$fact'):
             await message_handlers.randomFact(message)
 
-        elif message.content.startswith('$cat'):
+        elif message.content.startswith('$cat') or message.content.startswith('$pussy') :
             await message_handlers.randomCat(message)
+        
+        elif message.content.startswith("$dog") or message.content.startswith('$doggo'):
+            await message_handlers.randomDog(message)
 
 client = Client()
 client.run(config('BOT_TOKEN'))

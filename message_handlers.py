@@ -40,3 +40,10 @@ async def randomCat(message):
     file = discord.File('cat.jpg', filename='cat.jpg')
     embed.set_image(url='attachment://cat.jpg')
     await message.channel.send(file=file, embed=embed)
+
+async def randomDog(message):
+	print("Random dog sent!")
+	response = requests.get('https://dog.ceo/api/breeds/image/random').json()
+	embed = discord.Embed(color=0xff98fa)
+	embed.set_image(url=response['message'])
+	await message.channel.send(embed=embed)

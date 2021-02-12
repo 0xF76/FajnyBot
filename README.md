@@ -45,3 +45,5 @@ In order to get bot token see [Discord Developers Documentation](https://discord
 `$fact`
 * 🐱 random cat image\
 `$cat`
+* 🐶 random dog image\
+`$dog`
