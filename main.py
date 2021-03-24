@@ -1,6 +1,7 @@
 import discord
 import json
 from decouple import config
+import re
 
 import message_handlers
 
@@ -19,33 +20,36 @@ class Client(discord.Client):
             if dataFromFile[key] != None
         }
 
+        open('chosen.txt', 'a+').close()
+
         # Get chosen IDs from saved file
-        self.chosenIDs = open('chosen.txt', 'r+').read().split(" ")
+        self.chosenIDs = open('chosen.txt', 'r').read().split(' ')
         self.chosenIDs.pop()
 
     async def on_message(self, message):
         if message.author == self.user:
             return
 
-        elif message.content.startswith('$losuj') or message.content.startswith('$pseudolosuj'):
-            msg = message.content
-            if (msg.startswith('$losuj')):
-                msg = msg[len('$losuj'):]
-            else:
-                msg = msg[len('$pseudolosuj'):]
-
+        if re.match('^\$l(|[osuj]{4})[\s]*\d*$', message.content): # If the intend is to select a student
+            amount = message.content[re.search('^\$l[losuj]*\s*', message.content).span()[1]:]
             try:
-                amount = int(msg)
+                amount = int(amount)
             except ValueError: 
                 amount = 1
             
             for _ in range(amount):
                 await message_handlers.selectStudent(self, message)
         
+        elif message.content.startswith('$round'):
+            await message_handlers.round(self, message)
+        
+        elif message.content.startswith('$reset'):
+            await message_handlers.reset(self, message)
+
         elif message.content.startswith('$fact'):
             await message_handlers.randomFact(message)
 
-        elif message.content.startswith('$cat') or message.content.startswith('$pussy') :
+        elif message.content.startswith('$cat') or message.content.startswith('$pussy'):
             await message_handlers.randomCat(message)
         
         elif message.content.startswith("$dog") or message.content.startswith('$doggo'):
